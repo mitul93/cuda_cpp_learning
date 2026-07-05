@@ -8,7 +8,9 @@
             "name": "CUDA C++: Launch",
             "type": "cuda-gdb",
             "request": "launch",
-            "program": "${workspaceFolder}/build/src/01_hello_world/01_hello_world",
+            "preLaunchTask": "Build Example(s)",
+            "program": "${workspaceFolder}/build/src/${fileDirnameBasename}/${fileDirnameBasename}",
+            "cwd": "${workspaceFolder}/build/",
             "debuggerPath": "/usr/local/cuda/bin/cuda-gdb"
         },
         {
@@ -17,7 +19,5 @@
             "request": "attach",
             "processId": "${command:cuda.pickProcess}"
         },
-        
-            
     ]
 }

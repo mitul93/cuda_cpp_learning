@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build Example(s)",
+			"type": "shell",
+			"command": "make", // "command" : "make build_example" throws an error
+			"args": [
+				"build_example",
+				"BUILD_EXAMPLE=${fileDirnameBasename}"
+			]
+		}
+	]
+}
