@@ -1,0 +1,55 @@
+{
+	"name": "${localWorkspaceFolderBasename}",
+	"build": {
+		"context": "..",
+		"dockerfile": "Containerfile",
+		"args": {
+			"CONTAINER_BASE_IMAGE_NAME": "docker.io/ubuntu",
+			"CONTAINER_BASE_IMAGE_TAG": "26.04",
+			"USERNAME": "devcontainer",
+			"USER_UID": "1000",
+			"USER_GID": "1000",
+			"__REPOSITORY_NAME": "${localWorkspaceFolderBasename}",
+			"__CUDA_TOOLKIT_VER": "13.3",
+			"__CUDA_NVCC_DEB_PKG_VER": "13.3.33-1"
+		}
+	},
+	"containerUser": "devcontainer",
+	"userEnvProbe": "loginInteractiveShell",
+	// user’s UID/GID will be updated to match the local user’s UID/GID
+	// to avoid permission problems with bind mounts
+	"updateRemoteUserUID": true,
+	"runArgs": [
+		"--rm",
+		"-it",
+		"--memory",
+		"4g",
+		"--memory-swap",
+		"4g",
+		"--cpus",
+		"4",
+		"--device=nvidia.com/gpu=all" // podman
+		// "--device=all" 			  // docker
+	],
+	"containerEnv": {
+		// // For GUI applications
+		// "XDG_RUNTIME_DIR": "${localEnv:XDG_RUNTIME_DIR}",
+		// "WAYLAND_DISPLAY": "${localEnv:WAYLAND_DISPLAY}"
+	},
+	"workspaceFolder": "/${localWorkspaceFolderBasename}",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/${localWorkspaceFolderBasename},type=bind,consistency=cached",
+	"mounts": [
+		// // For GUI applications
+		//"source=${localEnv:XDG_RUNTIME_DIR}/${localEnv:WAYLAND_DISPLAY},target=${localEnv:XDG_RUNTIME_DIR}/${localEnv:WAYLAND_DISPLAY},type=bind,consistency=cached"
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode.cmake-tools",
+				"ms-vscode.cpptools",
+				"ms-vscode.makefile-tools",
+				"NVIDIA.nsight-vscode-edition"
+			]
+		}
+	}
+}

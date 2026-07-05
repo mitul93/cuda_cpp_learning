@@ -1,0 +1,53 @@
+# base image
+ARG CONTAINER_BASE_IMAGE_NAME=ubuntu
+ARG CONTAINER_BASE_IMAGE_TAG=26.04
+FROM ${CONTAINER_BASE_IMAGE_NAME}:${CONTAINER_BASE_IMAGE_TAG}
+
+# timezone
+ENV TZ="Etc/UTC"
+
+# set locale
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# install apt packages and dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    git make curl gnupg2 wget ca-certificates openssh-client \
+    sudo \
+    shellcheck \
+    cmake clang
+
+# default user
+ARG USERNAME=devcontainer
+ARG USER_UID=1000
+ARG USER_GID=1000
+# add $USER to usergroup
+# Some variants of Ubuntu has default user ubuntu with 1000:1000
+# Delete default user if USER_UID:USER_GID is already present
+RUN OLD_USER="$(getent passwd ${USER_UID} | cut -d: -f1 || true)"; \
+    if [ -n "$OLD_USER" ]; then \
+    userdel -r "$OLD_USER" || true; \
+    fi; \
+    groupadd --gid ${USER_GID} ${USERNAME} && \
+    useradd --uid ${USER_UID} --gid ${USER_GID} -m -l ${USERNAME} -s /bin/bash && \
+    usermod -aG sudo ${USERNAME} && \
+    echo "${USERNAME}:${USERNAME}_super_user" | chpasswd
+
+# Install required components from CUDA toolkit
+ARG __CUDA_TOOLKIT_VER=13.3
+ARG __CUDA_NVCC_DEB_PKG_VER=13.3.33-1
+COPY ./scripts/install_cuda.sh /tmp/install_cuda.sh
+RUN cd /tmp && ./install_cuda.sh && rm /tmp/install_cuda.sh
+ENV PATH="$PATH:/usr/local/cuda/bin"
+
+USER ${USERNAME}
+
+# working directory
+ARG __REPOSITORY_NAME=cuda_cpp_learning
+WORKDIR /${__REPOSITORY_NAME}
+
+# entry point
+ENTRYPOINT ["/bin/bash"]

@@ -1,0 +1,12 @@
+{
+    "telemetry.feedback.enabled": false,
+    "telemetry.editStats.details.enabled": false,
+    "telemetry.editStats.showDecorations": false,
+    "telemetry.editStats.enabled": false,
+    "editor.experimental.treeSitterTelemetry": false,
+    "containers.containerClient": "com.microsoft.visualstudio.containers.podman",
+    "containers.orchestratorClient": "com.microsoft.visualstudio.orchestrators.podmancompose",
+    "editor": {
+        "formatOnSave": true
+    },
+}
