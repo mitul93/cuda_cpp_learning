@@ -1,0 +1,9 @@
+{
+  "features": {
+    "ghcr.io/mitul93/devcontainer-features/nsight-systems-cli:latest": {
+      "version": "1.0.3",
+      "resolved": "ghcr.io/mitul93/devcontainer-features/nsight-systems-cli@sha256:84aa31ddb0ff149dedb474f2f338a40993a5c412600de822fc5c16df10f86d8d",
+      "integrity": "sha256:84aa31ddb0ff149dedb474f2f338a40993a5c412600de822fc5c16df10f86d8d"
+    }
+  }
+}

@@ -51,5 +51,10 @@
 				"NVIDIA.nsight-vscode-edition"
 			]
 		}
+	},
+	"features": {
+		"ghcr.io/mitul93/devcontainer-features/nsight-systems-cli:latest": {
+			"version": "latest"
+		}
 	}
 }
