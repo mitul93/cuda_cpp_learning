@@ -37,13 +37,21 @@ The development environment is configured to provide a reproducible setup for CU
 
 ## Getting Started
 
-Open the repository in Visual Studio Code and select:
-
-```text
-Reopen in Container
-```
+1. Clone this repository
+2. `Ctrl + Shift + P` -> `Dev Containers: Reopen in Container`
 
 VS Code will build the development container and provide a ready-to-use CUDA development environment.
+
+## Build and Run Hello World example
+
+1. Open the example source file (e.g. `main.cpp`, `.cu`, or `.h`).
+2. Optionally set breakpoints for debugging.
+3. Press `F5` and select **CUDA C++: Launch**.
+
+The provided `launch.json` and `tasks.json` are configured to automatically build and launch the example corresponding to the currently opened file. Any `.cpp`, `.cu`, or `.h` file located directly under an example directory can be used to determine which example is built and executed.
+
+> [!NOTE]
+> The current configuration derives the example name from the **parent directory of the active file**. Nested source files are therefore not supported. For example, opening `src/01_hello_world/utils/helper.cu` will resolve the example as `utils` rather than `01_hello_world`.
 
 # sudo user in devcontainer
 The sudo user password is <USERNAME>_super_user, where <USERNAME> is the value of the USERNAME (defaults to devcontainer) build argument.
