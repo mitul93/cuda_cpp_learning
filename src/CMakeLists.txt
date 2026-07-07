@@ -9,5 +9,6 @@ if(BUILD_EXAMPLE)
     endforeach()
 else()
     add_subdirectory(01_hello_world)
+    add_subdirectory(02_device_property)
     # Add more examples here
 endif()

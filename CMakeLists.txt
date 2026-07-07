@@ -30,6 +30,8 @@ set(CMAKE_CUDA_ARCHITECTURES 86)
 #     set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -lineinfo") # add line information to all builds for debug tools (exclusive to -G option)
 # endif()
 
+find_package(CUDAToolkit REQUIRED)
+
 option(BUILD_TESTS "Build unit tests" OFF)
 
 add_subdirectory(src)
