@@ -39,6 +39,7 @@ RUN OLD_USER="$(getent passwd ${USER_UID} | cut -d: -f1 || true)"; \
 # Install required components from CUDA toolkit
 ARG __CUDA_TOOLKIT_VER=13.3
 ARG __CUDA_NVCC_DEB_PKG_VER=13.3.33-1
+ARG __CUDA_GDB_DEB_PKG_VER=13.3.27-1
 COPY ./scripts/install_cuda.sh /tmp/install_cuda.sh
 RUN cd /tmp && ./install_cuda.sh && rm /tmp/install_cuda.sh
 ENV PATH="$PATH:/usr/local/cuda/bin"

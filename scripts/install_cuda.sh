@@ -95,22 +95,29 @@ install_cuda_toolkit() {
     : "${__CUDA_TOOLKIT_VER:?__CUDA_TOOLKIT_VER must be set (e.g. 12.4)}"
 
     local cuda_pkg_ver
+    # get 
     cuda_pkg_ver="$(echo "${__CUDA_TOOLKIT_VER}" | sed -E 's/^([0-9]+)\.([0-9]+)(\..*)?$/\1-\2/')"
 
     local cuda_nvcc_ver="${__CUDA_NVCC_DEB_PKG_VER:-""}"
+    local cuda_gdb_ver="${__CUDA_GDB_DEB_PKG_VER:-""}"
 
     $SUDO apt-get update
 
     local cuda_nvcc_pkg="cuda-nvcc-${cuda_pkg_ver}"
+    local cuda_gdb_pkg="cuda-gdb-${cuda_pkg_ver}"
 
     if [ -n "${cuda_nvcc_ver}" ]; then
         cuda_nvcc_pkg="${cuda_nvcc_pkg}=${cuda_nvcc_ver}"
     fi
 
-    echo "(*) Using CUDA Toolkit debian package version=${cuda_pkg_ver}"
-    echo "(*) Installing NVCC deb package version=${cuda_nvcc_ver}"
+    if [ -n "${cuda_gdb_ver}" ]; then
+        cuda_gdb_pkg="${cuda_gdb_pkg}=${cuda_gdb_ver}"
+    fi
 
-    $SUDO apt-get install -y --no-install-recommends "cuda-nvcc-${cuda_pkg_ver}=${cuda_nvcc_ver}"
+    echo "(*) Using CUDA Toolkit debian package version=${cuda_pkg_ver}"
+    echo "(*) Installing ${cuda_nvcc_pkg} ${cuda_gdb_pkg}"
+
+    $SUDO apt-get install -y --no-install-recommends "${cuda_nvcc_pkg}" "${cuda_gdb_pkg}"
 }
 
 main() {
@@ -118,7 +125,7 @@ main() {
     detect_arch
     detect_distro
 
-    echo "(*) install_cuda.sh script"
+    echo "(*) Running install_cuda.sh script"
     echo "    repo os  : ${DISTRO}"
     echo "    arch     : ${ARCH}"
     echo ""
