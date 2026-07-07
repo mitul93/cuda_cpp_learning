@@ -11,11 +11,11 @@ set(CMAKE_CUDA_HOST_COMPILER clang++)
 project(cuda_cpp_learning LANGUAGES CXX CUDA)
 
 # C++ standard settings (applies to .cpp files)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # CUDA standard settings (applies to .cu files)
-set(CMAKE_CUDA_STANDARD 17)
+set(CMAKE_CUDA_STANDARD 20)
 set(CMAKE_CUDA_STANDARD_REQUIRED ON)
 
 # Which GPU architectures to compile for.
