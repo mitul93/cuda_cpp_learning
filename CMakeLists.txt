@@ -5,6 +5,8 @@ set(CMAKE_C_COMPILER clang)
 set(CMAKE_CXX_COMPILER clang++)
 set(CMAKE_CUDA_HOST_COMPILER clang++)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # project() declares the project name AND which languages CMake needs
 # to configure compilers for. This is the CMake equivalent of "enable_language" —
 # you almost never need enable_language() separately if you list it here.
