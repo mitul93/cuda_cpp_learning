@@ -49,12 +49,13 @@ void print_device_info() {
                              kLabelWidth, prop.major);
     std::cout << std::format("{:<{}}: {}\n", "capability minor", kLabelWidth,
                              prop.minor);
-    std::cout << std::format("{:<{}}: {}\n", "shared memory per block (bytes)",
-                             kLabelWidth, prop.sharedMemPerBlock);
-    std::cout << std::format("{:<{}}: {}\n", "32-bit registers per block",
-                             kLabelWidth, prop.regsPerBlock);
-    std::cout << std::format("{:<{}}: {}\n", "Peak Memory Clock Rate (KHz)",
-                             kLabelWidth, memoryClockRate);
+    std::cout << std::format(
+        "{:<{}}: {} B, {} KiB\n", "shared memory per block (bytes)",
+        kLabelWidth, prop.sharedMemPerBlock, prop.sharedMemPerBlock / 1024.0);
+    std::cout << std::format("{:<{}}: {} KHz, {} MHz, {} GHz\n",
+                             "Peak Memory Clock Rate (KHz)", kLabelWidth,
+                             memoryClockRate, memoryClockRate / 1e3,
+                             memoryClockRate / 1e6);
     std::cout << std::format("{:<{}}: {}\n", "Memory Bus Width (bits)",
                              kLabelWidth, prop.memoryBusWidth);
     std::cout << std::format(
@@ -89,6 +90,15 @@ void print_device_info() {
     std::cout << std::format(
         "{:<{}}: ({}, {})\n", "max texture 2D linear (x, y)", kLabelWidth,
         prop.maxTexture2DLinear[0], prop.maxTexture2DLinear[1]);
+    std::cout << std::format(
+        "{:<{}}: ({}, {}, {})\n", "max texture 3D (x, y, z)", kLabelWidth,
+        prop.maxTexture3D[0], prop.maxTexture3D[1], prop.maxTexture3D[2]);
+    std::cout << std::format("{:<{}}: ({}, {}, {})\n",
+                             "max texture 3D Alt (x, y, z)", kLabelWidth,
+                             prop.maxTexture3DAlt[0], prop.maxTexture3DAlt[1],
+                             prop.maxTexture3DAlt[2]);
+    std::cout << std::format("{:<{}}: {}\n", "max texture cubemap", kLabelWidth,
+                             prop.maxTextureCubemap);
     std::cout << std::format("{:<{}}: {}\n", "max concurrent kernels",
                              kLabelWidth, prop.concurrentKernels);
     std::cout << std::format("{:<{}}: {}\n", "pci bus id", kLabelWidth,
@@ -99,9 +109,22 @@ void print_device_info() {
                              prop.pciDomainID);
     std::cout << std::format("{:<{}}: {}\n", "asynchronous engine count",
                              kLabelWidth, prop.asyncEngineCount);
-    std::cout << std::format("{:<{}}: {}\n", "L2 cache size (bytes)",
-                             kLabelWidth, prop.l2CacheSize);
+    std::cout << std::format("{:<{}}: {} KiB, {} MiB\n", "L2 cache size",
+                             kLabelWidth, prop.l2CacheSize / 1024.0,
+                             prop.l2CacheSize / 1024.0 / 1024.0);
     std::cout << std::format("{:<{}}: {}\n", "unified addressing", kLabelWidth,
                              prop.unifiedAddressing);
+    std::cout << std::format("{:<{}}: {}\n", "max thread per multiprocessor",
+                             kLabelWidth, prop.maxThreadsPerMultiProcessor);
+    std::cout << std::format("{:<{}}: {} B, {} KiB, {} MiB\n",
+                             "shared memory per multiprocessor", kLabelWidth,
+                             prop.sharedMemPerMultiprocessor,
+                             prop.sharedMemPerMultiprocessor / 1024.0,
+                             prop.sharedMemPerMultiprocessor / 1024.0 / 1024.0);
+    std::cout << std::format("{:<{}}: {}\n", "register per multiprocessor",
+                             kLabelWidth, prop.regsPerMultiprocessor);
+    std::cout << std::format("{:<{}}: {}\n",
+                             "max resident block per multiprocessor",
+                             kLabelWidth, prop.maxBlocksPerMultiProcessor);
   }
 }
