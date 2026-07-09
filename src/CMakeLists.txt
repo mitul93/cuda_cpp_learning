@@ -10,5 +10,6 @@ if(BUILD_EXAMPLE)
 else()
     add_subdirectory(01_hello_world)
     add_subdirectory(02_device_property)
+    add_subdirectory(03_vector_add)
     # Add more examples here
 endif()
