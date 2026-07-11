@@ -1,6 +1,7 @@
-#include "vector_add.h"
 #include <iostream>
 #include <numeric>
+
+#include "vector_add.cuh"
 
 int main() {
 

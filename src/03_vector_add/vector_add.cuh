@@ -1,8 +1,9 @@
-#include "vector_add.h"
-
+#pragma once
 #include <concepts> // <-- for std::integral / std::floating_point
-#include <cstdio>
-#include <cuda.h>
+#include <cuda_runtime.h>
+#include <format>
+#include <stdexcept>
+#include <vector>
 
 template <typename T>
 __global__ void vectorAddKernel(const T *a, const T *b, T *c, std::size_t n) {
@@ -18,7 +19,8 @@ template <typename T>
   requires(std::integral<T> || std::floating_point<T>)
 std::vector<T> vectorAdd(const std::vector<T> &a, const std::vector<T> &b) {
   if (a.size() != b.size()) {
-    throw std::invalid_argument("Vector sizes must match.");
+    throw std::invalid_argument(std::format(
+        "Vector sizes must match. len(a)={}, len(b)={}", a.size(), b.size()));
   }
 
   const auto n = a.size();
@@ -52,11 +54,3 @@ std::vector<T> vectorAdd(const std::vector<T> &a, const std::vector<T> &b) {
 
   return c;
 }
-
-// Explicit instantiation — generates actual code for these two types,
-// so their symbols exist in the compiled .cu object for the linker to find.
-// Slightly larger binary.
-template std::vector<int> vectorAdd<int>(const std::vector<int> &,
-                                         const std::vector<int> &);
-template std::vector<float> vectorAdd<float>(const std::vector<float> &,
-                                             const std::vector<float> &);
