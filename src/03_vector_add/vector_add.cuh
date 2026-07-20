@@ -6,12 +6,24 @@
 #include <vector>
 
 template <typename T>
-__global__ void vectorAddKernel(const T *a, const T *b, T *c, std::size_t n) {
+__global__ void vectorAddKernelNaive(const T *a, const T *b, T *c,
+                                     std::size_t n) {
   const auto idx =
       static_cast<std::size_t>(blockIdx.x * blockDim.x + threadIdx.x);
 
   if (idx < n) {
     c[idx] = a[idx] + b[idx];
+  }
+}
+
+__global__ void vectorAddOpt(float4 *a, float4 *b, float4 *c, int n) {
+  int idx = blockIdx.x * blockDim.x + threadIdx.x;
+  int stride = blockDim.x * gridDim.x;
+
+  for (int i = idx; i < n; i += stride) {
+    float4 va = a[i];
+    float4 vb = b[i];
+    c[i] = make_float4(va.x + vb.x, va.y + vb.y, va.z + vb.z, va.w + vb.w);
   }
 }
 
@@ -42,7 +54,7 @@ std::vector<T> vectorAdd(const std::vector<T> &a, const std::vector<T> &b) {
   const int blocks =
       static_cast<int>((n + threadsPerBlock - 1) / threadsPerBlock);
 
-  vectorAddKernel<<<blocks, threadsPerBlock>>>(dA, dB, dC, n);
+  vectorAddKernelNaive<<<blocks, threadsPerBlock>>>(dA, dB, dC, n);
 
   cudaDeviceSynchronize();
 
