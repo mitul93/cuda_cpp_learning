@@ -42,6 +42,7 @@ find_package(CUDAToolkit REQUIRED)
 option(BUILD_TESTS "Build unit tests" OFF)
 
 add_subdirectory(src)
+add_subdirectory(examples)
 
 if(BUILD_TESTS)
   enable_testing()

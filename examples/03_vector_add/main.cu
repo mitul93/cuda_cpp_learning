@@ -1,7 +1,7 @@
 #include <iostream>
 #include <numeric>
 
-#include "vector_add.cuh"
+#include "vector_add/vector_add.cuh"
 
 int main() {
 
