@@ -18,7 +18,10 @@ RUN apt-get update && \
     git make curl gnupg2 wget ca-certificates openssh-client \
     sudo \
     shellcheck \
-    cmake clang
+    # cpp
+    cmake clang \
+    # vcpkg
+    curl zip unzip tar pkg-config
 
 # default user
 ARG USERNAME=devcontainer
@@ -56,6 +59,14 @@ RUN --mount=type=cache,target=/var/cache/apt \
 ENV PATH="$PATH:/usr/local/cuda/bin"
 
 USER ${USERNAME}
+
+# install vcpkg (non-root)
+# renovate: datasource=github-tags depName=microsoft/vcpkg versioning=loose
+ARG VCPKG_VERSION=2026.06.24
+RUN --mount=type=bind,source=scripts/install_vcpkg.sh,target=/tmp/install_vcpkg.sh,readonly \
+    VCPKG_VERSION=${VCPKG_VERSION} /tmp/install_vcpkg.sh /home/${USERNAME}
+ENV PATH="$PATH:/home/${USERNAME}/vcpkg/"
+ENV VCPKG_ROOT=/home/${USERNAME}/vcpkg/
 
 # working directory
 ARG __REPOSITORY_NAME=cuda_cpp_learning

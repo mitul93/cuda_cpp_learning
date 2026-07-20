@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 4.0)
 
+if(DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+    set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+        CACHE STRING "Vcpkg toolchain file")
+endif()
+
 # Must be set before calling project()
 set(CMAKE_C_COMPILER clang)
 set(CMAKE_CXX_COMPILER clang++)
