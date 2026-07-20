@@ -51,5 +51,3 @@ The devcontaienr memory limit is set to `4G`.
 Benchmark range *loops over number of elements, not number of bytes!* Hence it goes out of required RAM for data type `int`
 
 Easy solution is to just reduce the number of elements in range.
-
-``
