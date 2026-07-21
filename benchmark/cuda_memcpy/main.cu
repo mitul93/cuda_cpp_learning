@@ -21,22 +21,39 @@ template <typename T> static void BM_cuda_h2d(benchmark::State &state) {
   cuda_memcpy::copy_h2d<T>(d_data, h_data, elements);
   cudaDeviceSynchronize();
 
+  cudaEvent_t start, stop;
+  cudaEventCreate(&start);
+  cudaEventCreate(&stop);
+
+  cudaEventRecord(start);
   for (auto _ : state) {
     cuda_memcpy::copy_h2d<T>(d_data, h_data, elements);
   }
+  cudaEventRecord(stop);
+  cudaEventSynchronize(stop);
 
   state.SetBytesProcessed(static_cast<int64_t>(state.iterations()) *
                           static_cast<int64_t>(bytes));
   state.SetLabel("H2D");
 
+  float avg_cuda_ms = 0;
+  cudaEventElapsedTime(&avg_cuda_ms, start, stop);
+
+  // Tell Google Benchmark the real GPU time
+  state.counters["cuda_ms"] = avg_cuda_ms / state.iterations();
+
+  cudaEventDestroy(start);
+  cudaEventDestroy(stop);
   cudaFreeHost(h_data);
   cudaFree(d_data);
 }
 
-// Range 10^6 to 10^9 elementds
-BENCHMARK_TEMPLATE(BM_cuda_h2d, uint8_t)->Range(1e3, 1e6)->Repetitions(1);
-BENCHMARK_TEMPLATE(BM_cuda_h2d, int)->Range(1e3, 1e6)->Repetitions(1);
-BENCHMARK_TEMPLATE(BM_cuda_h2d, float)->Range(1e3, 1e6)->Repetitions(1);
-BENCHMARK_TEMPLATE(BM_cuda_h2d, double)->Range(1e3, 1e6)->Repetitions(1);
+// Range 10^3 to 10^6 elementds
+#define TEST_PARAMETERS Range(1e3, 1e6)->Iterations(10)->Repetitions(1);
+
+BENCHMARK_TEMPLATE(BM_cuda_h2d, uint8_t)->TEST_PARAMETERS;
+BENCHMARK_TEMPLATE(BM_cuda_h2d, int)->TEST_PARAMETERS;
+BENCHMARK_TEMPLATE(BM_cuda_h2d, float)->TEST_PARAMETERS;
+BENCHMARK_TEMPLATE(BM_cuda_h2d, double)->TEST_PARAMETERS;
 
 BENCHMARK_MAIN();

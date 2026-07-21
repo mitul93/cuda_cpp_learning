@@ -1,3 +1,13 @@
+### Profiling
+
+```shell
+$ cd build/
+$ cmake -DBUILD_BENCHMARKS=ON ..
+$ make -j $(nproc)
+$ nsys profile --trace=cuda --output=report_cuda_memcpy ./benchmark/cuda_memcpy/cuda_memcpy 
+```
+
+Open Nsight Systems. File -> Import -> report_cuda_memcpy.qdstrm
 
 ### Troubleshooting
 
