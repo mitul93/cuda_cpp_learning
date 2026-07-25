@@ -12,7 +12,11 @@
 			"__REPOSITORY_NAME": "${localWorkspaceFolderBasename}",
 			"__CUDA_TOOLKIT_VER": "13.3",
 			"__CUDA_NVCC_DEB_PKG_VER": "13.3.33-1"
-		}
+		},
+		"options": [
+			"--secret",
+			"id=vcpkg-nuget-readonly,src=${localEnv:HOME}/src/secrets/github/vcpkg-nuget/vcpkg-nuget-readonly"
+		]
 	},
 	"containerUser": "devcontainer",
 	"userEnvProbe": "loginInteractiveShell",

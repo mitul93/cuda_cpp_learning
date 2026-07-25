@@ -23,7 +23,9 @@ RUN --mount=type=cache,target=/var/cache/apt \
     # cpp
     clang \
     # vcpkg
-    curl zip unzip tar pkg-config
+    curl zip unzip tar pkg-config \
+    # nuget
+    mono-complete
 
 # default user
 ARG USERNAME=devcontainer
@@ -60,6 +62,11 @@ RUN --mount=type=cache,target=/var/cache/apt \
 
 ENV PATH="$PATH:/usr/local/cuda/bin"
 
+# temporary workaround. 
+# https://github.com/KSP-CKAN/CKAN/issues/4590
+RUN cd /tmp && wget https://archive.ubuntu.com/ubuntu/pool/universe/m/mono/ca-certificates-mono_6.12.0.199+dfsg-6_all.deb -O ca-certificates-mono.deb && \
+    dpkg -i ca-certificates-mono.deb && rm -rf ca-certificates-mono.deb
+
 USER ${USERNAME}
 
 # install CMake (non-root)
@@ -75,7 +82,17 @@ ARG VCPKG_VERSION=2026.06.24
 RUN --mount=type=bind,source=scripts/install_vcpkg.sh,target=/tmp/install_vcpkg.sh,readonly \
     VCPKG_VERSION=${VCPKG_VERSION} /tmp/install_vcpkg.sh /home/${USERNAME}
 ENV PATH="$PATH:/home/${USERNAME}/vcpkg/"
-ENV VCPKG_ROOT=/home/${USERNAME}/vcpkg/
+ENV VCPKG_ROOT=/home/${USERNAME}/vcpkg
+ENV VCPKG_BINARY_SOURCES="clear;nuget,https://nuget.pkg.github.com/mitul93/index.json,read"
+ENV VCPKG_NUGET_REPOSITORY=https://github.com/mitul93/vcpkg-nuget
+ENV VCPKG_FEATURE_FLAGS=binarycaching
+
+# Install nuget
+RUN vcpkg fetch nuget && mkdir ~/.local/bin && ln -sf ${VCPKG_ROOT}/downloads/tools/nuget-*/nuget.exe ~/.local/bin/nuget.exe
+ENV PATH="$PATH:/home/${USERNAME}/.local/bin/"
+
+RUN --mount=type=secret,id=vcpkg-nuget-readonly,uid=${USER_UID},gid=${USER_GID},mode=0400 \
+    mono /home/${USERNAME}/.local/bin/nuget.exe sources Add -Source "https://nuget.pkg.github.com/mitul93/index.json" -Name "github" -Username "mitul93" -Password "$(cat /run/secrets/vcpkg-nuget-readonly)" -StorePasswordInClearText
 
 # working directory
 ARG __REPOSITORY_NAME=cuda_cpp_learning
