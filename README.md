@@ -56,6 +56,22 @@ The provided `launch.json` and `tasks.json` are configured to automatically buil
 # sudo user in devcontainer
 The sudo user password is <USERNAME>_super_user, where <USERNAME> is the value of the USERNAME (defaults to devcontainer) build argument.
 
+## vcpkg NuGet Cache Authentication
+
+This project uses the GitHub repository [vcpkg-nuget](https://github.com/mitul93/vcpkg-nuget) as a NuGet cache for vcpkg packages.
+
+The repository itself is public, but the GitHub NuGet Package Registry requires authentication even when reading public packages.
+
+A GitHub Personal Access Token (PAT) with `read:packages` permission is therefore required to restore packages from the registry.
+
+To access the vcpkg NuGet package registry, 
+
+1. Create a GitHub PAT with the required permissions:
+   - `read:packages` — required to download packages
+   - `write:packages` — required only if publishing packages (not required for local development)
+
+2. Save the token as a plain text file at: `$HOME/src/secrets/github/vcpkg-nuget/vcpkg-nuget-readonly`
+
 # Troubleshooting Guide
 
 ## What is the password of sudo user inside devcontainer?
