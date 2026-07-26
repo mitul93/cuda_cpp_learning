@@ -15,7 +15,7 @@
 		},
 		"options": [
 			"--secret",
-			"id=vcpkg-nuget-readonly,src=${localEnv:HOME}/src/secrets/github/vcpkg-nuget/vcpkg-nuget-readonly"
+			"id=vcpkg-nuget-secret,src=${localEnv:HOME}/src/secrets/github/vcpkg-nuget/vcpkg-nuget-readonly"
 		]
 	},
 	"containerUser": "devcontainer",
