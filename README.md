@@ -70,7 +70,7 @@ To access the vcpkg NuGet package registry,
    - `read:packages` — required to download packages
    - `write:packages` — required only if publishing packages (not required for local development)
 
-2. Save the token as a plain text file at: `$HOME/src/secrets/github/vcpkg-nuget/vcpkg-nuget-readonly`
+2. Save the token as a plain text file at: `$HOME/src/secrets/github/vcpkg-nuget/vcpkg-nuget-secret`
 
 # Troubleshooting Guide
 

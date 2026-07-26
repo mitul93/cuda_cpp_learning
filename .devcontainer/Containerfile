@@ -1,7 +1,7 @@
 # base image
 ARG CONTAINER_BASE_IMAGE_NAME=ubuntu
 ARG CONTAINER_BASE_IMAGE_TAG=26.04
-FROM ${CONTAINER_BASE_IMAGE_NAME}:${CONTAINER_BASE_IMAGE_TAG}
+FROM ${CONTAINER_BASE_IMAGE_NAME}:${CONTAINER_BASE_IMAGE_TAG} AS base
 
 # timezone
 ENV TZ="Etc/UTC"
@@ -91,8 +91,11 @@ ENV VCPKG_FEATURE_FLAGS=binarycaching
 RUN vcpkg fetch nuget && mkdir ~/.local/bin && ln -sf ${VCPKG_ROOT}/downloads/tools/nuget-*/nuget.exe ~/.local/bin/nuget.exe
 ENV PATH="$PATH:/home/${USERNAME}/.local/bin/"
 
-RUN --mount=type=secret,id=vcpkg-nuget-readonly,uid=${USER_UID},gid=${USER_GID},mode=0400 \
-    mono /home/${USERNAME}/.local/bin/nuget.exe sources Add -Source "https://nuget.pkg.github.com/mitul93/index.json" -Name "github" -Username "mitul93" -Password "$(cat /run/secrets/vcpkg-nuget-readonly)" -StorePasswordInClearText
+ARG CACHE_BUST=0
+ARG GITHUB_PACKAGE_NAMESPACE="mitul93"
+RUN --mount=type=secret,id=vcpkg-nuget-secret,uid=${USER_UID},gid=${USER_GID},mode=0400 \
+    mono /home/${USERNAME}/.local/bin/nuget.exe sources Add -Source "https://nuget.pkg.github.com/mitul93/index.json" \
+    -Name "github" -Username ${GITHUB_PACKAGE_NAMESPACE} -Password "$(cat /run/secrets/vcpkg-nuget-secret)"
 
 # working directory
 ARG __REPOSITORY_NAME=cuda_cpp_learning

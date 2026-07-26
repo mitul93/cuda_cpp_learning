@@ -29,3 +29,9 @@ build_example: ## Build individual example(s). usage make build_example EXAMPLES
 	@cd build && \
 		cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_EXAMPLE=$(BUILD_EXAMPLE) .. && \
 		make -j $(nproc)
+
+.PHONY: publish_nuget_packages
+publish_nuget_packages: ## Build and publish packages
+	@mkdir -p build
+	@cd build && \
+		cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLE=OFF ..
