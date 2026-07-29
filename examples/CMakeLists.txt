@@ -8,16 +8,15 @@ if(BUILD_EXAMPLE)
         add_subdirectory(${example})
     endforeach()
 else()
-    file(GLOB children RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-        "${CMAKE_CURRENT_SOURCE_DIR}/*")
+    file(GLOB_RECURSE example_cmakelists
+        RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/*/CMakeLists.txt"
+    )
 
-    foreach(child IN LISTS children)
-        if(
-            IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${child}"
-            AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${child}/CMakeLists.txt"
-        )
-            message(STATUS "Adding example: ${child}")
-            add_subdirectory("${child}")
-        endif()
+    foreach(cmake_file IN LISTS example_cmakelists)
+        get_filename_component(example_dir "${cmake_file}" DIRECTORY)
+
+        message(STATUS "Adding example: ${example_dir}")
+        add_subdirectory("${example_dir}")
     endforeach()
 endif()
