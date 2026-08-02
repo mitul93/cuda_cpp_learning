@@ -5,5 +5,4 @@ set(VCPKG_BUILD_TYPE release)
 set(VCPKG_LIBRARY_LINKAGE dynamic)
 set(VCPKG_FIXUP_ELF_RPATH ON)
 
-# set(VCPKG_CRT_LINKAGE dynamic)
 set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE "${CMAKE_CURRENT_LIST_DIR}/../../cmake/clang-toolchain.cmake")
