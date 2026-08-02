@@ -56,6 +56,9 @@ RUN --mount=type=cache,target=/var/cache/apt \
     apt-get install -y --no-install-recommends \
     cuda-nvcc-${__CUDA_TOOLKIT_VER} \
     cuda-gdb-${__CUDA_TOOLKIT_VER} \
+    cuda-cupti-dev-${__CUDA_TOOLKIT_VER} \ 
+    cuda-nvml-dev-${__CUDA_TOOLKIT_VER} \
+    cuda-profiler-api-${__CUDA_TOOLKIT_VER} \
     cuda-nsight-compute-${__CUDA_TOOLKIT_VER} \
     nsight-systems-cli-${__NSIGHT_SYSTEMS_CLI_VER} && \
     rm -f /etc/apt/apt.conf.d/docker-clean
