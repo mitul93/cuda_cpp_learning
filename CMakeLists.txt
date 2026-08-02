@@ -38,6 +38,9 @@ set(CMAKE_CUDA_STANDARD_REQUIRED ON)
 # https://docs.nvidia.com/cuda/cuda-programming-guide/05-appendices/compute-capabilities.html
 set(CMAKE_CUDA_ARCHITECTURES 86)
 
+# use lambda on device
+set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} --extended-lambda")
+
 # if(ENABLE_CUDA_DEBUG)
 #     set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -G")        # enable cuda-gdb (may significantly affect performance on some targets)
 # else()
