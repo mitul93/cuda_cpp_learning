@@ -5,10 +5,17 @@ if(DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
         CACHE STRING "Vcpkg toolchain file")
 endif()
 
+# Location of custom triplets
+# https://learn.microsoft.com/en-us/vcpkg/concepts/triplets#triplet-selection
+set(VCPKG_OVERLAY_TRIPLETS "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/triplets/" CACHE STRING "")
+
+# configure detection of host and target triplets
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/vcpkg-auto-triplet.cmake)
+
+# Set compiler for host and CUDA
 # Must be set before calling project()
-set(CMAKE_C_COMPILER clang)
-set(CMAKE_CXX_COMPILER clang++)
-set(CMAKE_CUDA_HOST_COMPILER clang++)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/clang-toolchain.cmake)
+
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
