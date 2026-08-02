@@ -1,6 +1,7 @@
 {
     "name": "cuda-cpp-learning",
     "dependencies": [
-        "benchmark"
+        "benchmark",
+        "nvbench"
     ]
 }
