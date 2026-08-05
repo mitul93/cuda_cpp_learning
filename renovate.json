@@ -16,7 +16,11 @@
             "matchFileNames": [
                 "**/Containerfile"
             ],
-            "groupName": "Containerfile ARG versions"
+            "groupName": "Containerfile ARG versions",
+            "matchUpdateTypes": [
+                "patch"
+            ],
+            "enabled": false
         }
     ]
 }
