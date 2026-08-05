@@ -1,0 +1,22 @@
+{
+    "customManagers": [
+        {
+            "customType": "regex",
+            "description": "Containerfile ARG version pins annotated with a renovate comment",
+            "fileMatch": [
+                "(^|/)Containerfile$"
+            ],
+            "matchStrings": [
+                "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)(?: versioning=(?<versioning>\\S+))?\\s*\\nARG (?<key>[A-Z0-9_]+)\\s*=\\s*\"?(?<currentValue>[^\"\\s]+)\"?"
+            ]
+        }
+    ],
+    "packageRules": [
+        {
+            "matchFileNames": [
+                "**/Containerfile"
+            ],
+            "groupName": "Containerfile ARG versions"
+        }
+    ]
+}
