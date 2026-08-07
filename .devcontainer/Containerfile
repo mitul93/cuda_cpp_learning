@@ -81,7 +81,7 @@ RUN --mount=type=bind,source=scripts/install_cmake.sh,target=/tmp/install_cmake.
 ENV PATH="$PATH:/home/${USERNAME}/cmake/bin/"
 
 # install vcpkg (non-root)
-# renovate: datasource=github-tags depName=microsoft/vcpkg versioning=semver
+# renovate: datasource=github-tags depName=microsoft/vcpkg versioning=loose
 ARG VCPKG_VERSION=2026.06.24
 RUN --mount=type=bind,source=scripts/install_vcpkg.sh,target=/tmp/install_vcpkg.sh,readonly \
     VCPKG_VERSION=${VCPKG_VERSION} /tmp/install_vcpkg.sh /home/${USERNAME}
