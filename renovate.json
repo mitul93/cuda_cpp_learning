@@ -8,19 +8,48 @@
             ],
             "matchStrings": [
                 "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)(?: versioning=(?<versioning>\\S+))?\\s*\\nARG (?<key>[A-Z0-9_]+)\\s*=\\s*\"?(?<currentValue>[^\"\\s]+)\"?"
+            ],
+            "autoReplaceStringTemplate": "# renovate: datasource={{datasource}} depName={{depName}}{{#if versioning}} versioning={{versioning}}{{/if}}\nARG {{key}}={{newValue}}"
+        },
+        {
+            "customType": "jsonata",
+            "description": "Update baseline of vcpkg registry",
+            "fileMatch": [
+                "vcpkg-configuration.json$"
+            ],
+            "fileFormat": "json",
+            "datasourceTemplate": "git-refs",
+            "matchStrings": [
+                "$.\"default-registry\".{\"packageName\": repository,  \"currentValue\":\"master\", \"currentDigest\": baseline}"
             ]
         }
     ],
     "packageRules": [
         {
+            "matchManagers": [
+                "custom.regex"
+            ],
             "matchFileNames": [
                 "**/Containerfile"
             ],
             "groupName": "Containerfile ARG versions",
-            "matchUpdateTypes": [
-                "patch"
+            "minimumReleaseAge": "1 month"
+        },
+        {
+            "description": "Containerfile image updates",
+            "matchDatasources": [
+                "docker"
             ],
-            "enabled": false
+            "matchFileNames": [
+                "**/Containerfile"
+            ],
+            "minimumReleaseAge": null
+        },
+        {
+            "matchFileNames": [
+                "vcpkg-configuration.json"
+            ],
+            "groupName": "vcpkg configuration update"
         }
     ]
 }
