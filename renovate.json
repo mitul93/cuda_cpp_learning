@@ -3,19 +3,18 @@
         {
             "customType": "regex",
             "description": "Containerfile ARG version pins annotated with a renovate comment",
-            "fileMatch": [
-                "(^|/)Containerfile$"
+            "managerFilePatterns": [
+                "/(^|/)Containerfile$/"
             ],
             "matchStrings": [
                 "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)(?: versioning=(?<versioning>\\S+))?\\s*\\nARG (?<key>[A-Z0-9_]+)\\s*=\\s*\"?(?<currentValue>[^\"\\s]+)\"?"
-            ],
-            "autoReplaceStringTemplate": "# renovate: datasource={{datasource}} depName={{depName}}{{#if versioning}} versioning={{versioning}}{{/if}}\nARG {{key}}={{newValue}}"
+            ]
         },
         {
             "customType": "jsonata",
             "description": "Update baseline of vcpkg registry",
-            "fileMatch": [
-                "vcpkg-configuration.json$"
+            "managerFilePatterns": [
+                "/vcpkg-configuration.json$/"
             ],
             "fileFormat": "json",
             "datasourceTemplate": "git-refs",
