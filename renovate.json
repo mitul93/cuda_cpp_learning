@@ -32,7 +32,6 @@
             "matchFileNames": [
                 "**/Containerfile"
             ],
-            "groupName": "Containerfile ARG versions",
             "minimumReleaseAge": "1 month"
         },
         {
