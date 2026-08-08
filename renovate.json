@@ -1,4 +1,7 @@
 {
+    "prCreation": "immediate",
+    "prConcurrentLimit": 10,
+    "prHourlyLimit": 10,
     "customManagers": [
         {
             "customType": "regex",
@@ -31,7 +34,6 @@
             "matchFileNames": [
                 "**/Containerfile"
             ],
-            "groupName": "Containerfile ARG versions",
             "minimumReleaseAge": "1 month"
         },
         {
@@ -48,7 +50,8 @@
             "matchFileNames": [
                 "vcpkg-configuration.json"
             ],
-            "groupName": "vcpkg configuration update"
+            "groupName": "vcpkg configuration update",
+            "minimumReleaseAge": null
         }
     ]
 }
