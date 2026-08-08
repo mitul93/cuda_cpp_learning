@@ -23,6 +23,8 @@ RUN --mount=type=cache,target=/var/cache/apt \
     shellcheck \
     # cpp
     clang \
+    # clangd
+    clangd \
     # vcpkg
     curl zip unzip tar pkg-config \
     # nuget

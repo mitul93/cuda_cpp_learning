@@ -32,6 +32,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CUDA_STANDARD 20)
 set(CMAKE_CUDA_STANDARD_REQUIRED ON)
 
+set(CMAKE_CUDA_USE_RESPONSE_FILE_FOR_INCLUDES 0)
+set(CMAKE_CUDA_USE_RESPONSE_FILE_FOR_LIBRARIES 0)
+set(CMAKE_CUDA_USE_RESPONSE_FILE_FOR_OBJECTS 0)
+
 # Which GPU architectures to compile for.
 # Find yours: run `nvidia-smi` then look up compute capability for your card.
 # 75 = Turing (RTX 20xx), 86 = Ampere (RTX 30xx), 90 = Hopper (H100)

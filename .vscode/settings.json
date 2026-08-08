@@ -1,12 +1,23 @@
 {
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "C_Cpp.errorSquiggles": "disabled",
+    "clangd.arguments": [
+        "--clang-tidy"
+    ],
+    "[cpp]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+        "editor.detectIndentation": false,
+    },
+    "[c]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+        "editor.detectIndentation": false,
+    },
+    "nsight.cuda.languageSupport.provider": "clangd",
+    "nsight.cuda.languageSupport.autoConfigure":true,
+    "cmake.buildDirectory":"${workspaceFolder}/build",
     "telemetry.feedback.enabled": false,
     "telemetry.editStats.details.enabled": false,
     "telemetry.editStats.showDecorations": false,
     "telemetry.editStats.enabled": false,
-    "editor.experimental.treeSitterTelemetry": false,
-    "containers.containerClient": "com.microsoft.visualstudio.containers.podman",
-    "containers.orchestratorClient": "com.microsoft.visualstudio.orchestrators.podmancompose",
-    "editor": {
-        "formatOnSave": true
-    },
+    "editor.experimental.treeSitterTelemetry": false
 }

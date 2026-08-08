@@ -51,7 +51,7 @@
 		"vscode": {
 			"extensions": [
 				"ms-vscode.cmake-tools",
-				"ms-vscode.cpptools",
+				"llvm-vs-code-extensions.vscode-clangd",
 				"ms-vscode.makefile-tools",
 				"NVIDIA.nsight-vscode-edition"
 			]
