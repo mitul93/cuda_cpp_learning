@@ -1,5 +1,7 @@
 {
     "prCreation": "immediate",
+    "prConcurrentLimit": 10,
+    "prHourlyLimit": 10,
     "customManagers": [
         {
             "customType": "regex",
