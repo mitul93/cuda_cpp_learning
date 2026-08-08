@@ -1,4 +1,5 @@
 {
+    "prCreation": "immediate",
     "customManagers": [
         {
             "customType": "regex",
@@ -48,7 +49,8 @@
             "matchFileNames": [
                 "vcpkg-configuration.json"
             ],
-            "groupName": "vcpkg configuration update"
+            "groupName": "vcpkg configuration update",
+            "minimumReleaseAge": null
         }
     ]
 }
