@@ -5,4 +5,9 @@ set(VCPKG_BUILD_TYPE release)
 set(VCPKG_LIBRARY_LINKAGE dynamic)
 set(VCPKG_FIXUP_ELF_RPATH ON)
 
-set(VCPKG_CHAINLOAD_TOOLCHAIN_FILE "${CMAKE_CURRENT_LIST_DIR}/../../cmake/clang-toolchain.cmake")
+# https://learn.microsoft.com/en-us/vcpkg/users/triplets#vcpkg_cmake_configure_options
+# https://learn.microsoft.com/en-us/vcpkg/maintainers/functions/vcpkg_cmake_configure
+set(VCPKG_CMAKE_CONFIGURE_OPTIONS
+    "-DCMAKE_C_COMPILER=clang"
+    "-DCMAKE_CXX_COMPILER=clang++"
+)
