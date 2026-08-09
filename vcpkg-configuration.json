@@ -5,7 +5,14 @@
         "baseline": "ea1a7396b05637a53bf23c078647ecc0edee4b80",
         "repository": "https://github.com/microsoft/vcpkg"
     },
-    "overlay-ports": [
-        "./vcpkg/ports"
+    "registries": [
+        {
+            "kind": "git",
+            "repository": "https://github.com/mitul93/vcpkg-registry",
+            "baseline": "272e3063d64c771fe6a933f35dfa486ad545d363",
+            "packages": [
+                "nvbench"
+            ]
+        }
     ]
 }
