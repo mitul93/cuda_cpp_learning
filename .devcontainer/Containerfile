@@ -15,7 +15,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN rm -f /etc/apt/apt.conf.d/docker-clean
 
 # install apt packages and dependencies
-RUN --mount=type=cache,target=/var/cache/apt \
+RUN --mount=type=cache,target=/var/cache/apt,id=cuda-cpp-learning-apt,sharing=locked \
     apt-get update && \
     apt-get install -y --no-install-recommends \
     git make curl gnupg2 wget ca-certificates openssh-client \
@@ -45,14 +45,13 @@ RUN OLD_USER="$(getent passwd ${USER_UID} | cut -d: -f1 || true)"; \
     echo "${USERNAME}:${USERNAME}_super_user" | chpasswd
 
 # install cuda-keyring
-COPY scripts/install_cuda_keyring.sh /tmp/install_cuda_keyring.sh
-RUN bash /tmp/install_cuda_keyring.sh \
-    && rm /tmp/install_cuda_keyring.sh
+RUN --mount=type=bind,source=scripts/install_cuda_keyring.sh,target=/tmp/scripts/install_cuda_keyring.sh \
+    bash /tmp/scripts/install_cuda_keyring.sh
 
 # Install required components from CUDA toolkit
 ARG __CUDA_TOOLKIT_VER=13-3
 ARG __NSIGHT_SYSTEMS_CLI_VER=2026.3.1
-RUN --mount=type=cache,target=/var/cache/apt \
+RUN --mount=type=cache,target=/var/cache/apt,id=cuda-cpp-learning-apt,sharing=locked \
     apt-get update && \
     apt-get install -y --no-install-recommends \
     cuda-nvcc-${__CUDA_TOOLKIT_VER} \
@@ -61,8 +60,7 @@ RUN --mount=type=cache,target=/var/cache/apt \
     cuda-nvml-dev-${__CUDA_TOOLKIT_VER} \
     cuda-profiler-api-${__CUDA_TOOLKIT_VER} \
     cuda-nsight-compute-${__CUDA_TOOLKIT_VER} \
-    nsight-systems-cli-${__NSIGHT_SYSTEMS_CLI_VER} && \
-    rm -f /etc/apt/apt.conf.d/docker-clean
+    nsight-systems-cli-${__NSIGHT_SYSTEMS_CLI_VER}
 
 ENV PATH="$PATH:/usr/local/cuda/bin"
 
