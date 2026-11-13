@@ -3,9 +3,9 @@ name: Renovate
 
 on:
   schedule:
-    # Runs every Friday at 03:00 UTC
+    # Every two weeks
     #(minute) (hour) (day of month) (month) (day of week)
-    - cron: '0 3 * * 5'
+    - cron: "0 4 1,15 * *"   # 04:00 UTC on the 1st and 15th
   workflow_dispatch:
     inputs:
       logLevel:
